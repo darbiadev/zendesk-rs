@@ -1,6 +1,6 @@
 use reqwest::Method;
-use serde::{Deserialize, Serialize};
 use serde::de::DeserializeOwned;
+use serde::{Deserialize, Serialize};
 
 use crate::resources::oauth_tokens::models::{
     TokenRequest, TokenRequestWrapper, TokenResponseWrapper,
@@ -57,8 +57,8 @@ impl Client {
     }
 
     pub async fn make_request<T>(&self, method: Method, resource: String) -> reqwest::Result<T>
-        where
-            T: DeserializeOwned,
+    where
+        T: DeserializeOwned,
     {
         let url = format!("{}/{}", &self.base_url, resource);
 
