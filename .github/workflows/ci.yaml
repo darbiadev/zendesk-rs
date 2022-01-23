@@ -22,6 +22,7 @@ jobs:
       matrix:
         os:
           - ubuntu-latest
+          - macOS-latest
           - windows-latest
     steps:
       - id: skip_check
@@ -56,6 +57,7 @@ jobs:
       matrix:
         os:
           - ubuntu-latest
+          - macOS-latest
           - windows-latest
     steps:
       - id: skip_check
@@ -85,14 +87,13 @@ jobs:
 
   # Run cargo --check on all platforms
   check:
-    needs: [rustfmt, clippy]
+    needs: [ rustfmt, clippy ]
     runs-on: ${{ matrix.triple.os }}
     continue-on-error: true
     strategy:
       fail-fast: false
       matrix:
         triple:
-          # x86 or x64
           - {
             os: "ubuntu-latest",
             target: "x86_64-unknown-linux-gnu",
@@ -100,8 +101,14 @@ jobs:
             rust: stable,
           }
           - {
+            os: "macOS-latest",
+            target: "x86_64-apple-darwin",
+            cross: false,
+            rust: stable,
+          }
+          - {
             os: "windows-latest",
-            target: "x86_64-pc-windows-gnu",
+            target: "x86_64-pc-windows-msvc",
             cross: false,
             rust: stable,
           }
@@ -142,7 +149,7 @@ jobs:
 
   # Run tests x86-64 for supported operating systems
   test:
-    needs: [rustfmt, clippy]
+    needs: [ rustfmt, clippy ]
     runs-on: ${{ matrix.triple.os }}
     continue-on-error: true
     strategy:
@@ -156,8 +163,14 @@ jobs:
             rust: stable,
           }
           - {
+            os: "macOS-latest",
+            target: "x86_64-apple-darwin",
+            cross: false,
+            rust: stable,
+          }
+          - {
             os: "windows-latest",
-            target: "x86_64-pc-windows-gnu",
+            target: "x86_64-pc-windows-msvc",
             cross: false,
             rust: stable,
           }
@@ -192,5 +205,4 @@ jobs:
         if: ${{ steps.skip_check.outputs.should_skip != 'true' }}
         run: cargo test --no-fail-fast
         env:
-          CARGO_HUSKY_DONT_INSTALL_HOOKS: true
           RUST_BACKTRACE: full
