@@ -24,7 +24,7 @@ pub struct Ticket {
     pub requester_id: i64,
     pub submitter_id: i64,
     pub assignee_id: i64,
-    pub organization_id: i64,
+    pub organization_id: Option<i64>,
     pub group_id: i64,
     pub collaborator_ids: Vec<i64>,
     pub follower_ids: Vec<i64>,
