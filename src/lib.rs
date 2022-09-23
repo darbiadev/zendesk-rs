@@ -36,7 +36,7 @@ impl Client {
     pub async fn update_token(&mut self) {
         let token_request_data = TokenRequestWrapper {
             token: TokenRequest {
-                client_id: (&self.oauth_client_id).parse().unwrap(),
+                client_id: self.oauth_client_id.parse().unwrap(),
                 scopes: vec![String::from("read")],
             },
         };
