@@ -56,7 +56,7 @@ impl Client {
         self.oauth_token = Some(token_wrapper.token.full_token);
     }
 
-    pub async fn make_request<T>(&self, method: Method, resource: String) -> reqwest::Result<T>
+    pub async fn make_request<T>(self, method: Method, resource: String) -> reqwest::Result<T>
     where
         T: DeserializeOwned,
     {
