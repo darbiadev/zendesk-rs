@@ -64,7 +64,7 @@ impl Client {
 
         let request = reqwest::Client::new()
             .request(method, url)
-            .bearer_auth(&self.oauth_token.as_ref().unwrap());
+            .bearer_auth(self.oauth_token.as_ref().unwrap());
 
         request.send().await?.json::<T>().await
     }
