@@ -56,7 +56,7 @@ impl Client {
         self.oauth_token = Some(token_wrapper.token.full_token);
     }
 
-    pub async fn make_request<T>(&self, method: Method, resource: String) -> reqwest::Result<T>
+    pub async fn make_request<T>(self, method: Method, resource: String) -> reqwest::Result<T>
     where
         T: DeserializeOwned,
     {
@@ -64,7 +64,7 @@ impl Client {
 
         let request = reqwest::Client::new()
             .request(method, url)
-            .bearer_auth(&self.oauth_token.as_ref().unwrap());
+            .bearer_auth(self.oauth_token.as_ref().unwrap());
 
         request.send().await?.json::<T>().await
     }
