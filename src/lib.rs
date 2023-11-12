@@ -18,6 +18,7 @@ pub struct Client {
 }
 
 impl Client {
+    #[must_use]
     pub fn new(
         base_url: String,
         email: String,
@@ -33,6 +34,9 @@ impl Client {
         }
     }
 
+    /// # Panics
+    ///
+    /// Will panic if the if the HTTP request fails.
     pub async fn update_token(&mut self) {
         let token_request_data = TokenRequestWrapper {
             token: TokenRequest {
@@ -56,6 +60,13 @@ impl Client {
         self.oauth_token = Some(token_wrapper.token.full_token);
     }
 
+    /// # Errors
+    ///
+    /// Will return `reqwest::Error` if the HTTP request fails.
+    ///
+    /// # Panics
+    ///
+    /// Will panic if the `oauth_token` is `None`.
     pub async fn make_request<T>(self, method: Method, resource: String) -> reqwest::Result<T>
     where
         T: DeserializeOwned,
