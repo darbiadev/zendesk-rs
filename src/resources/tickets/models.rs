@@ -5,6 +5,7 @@ pub struct TicketWrapper {
     pub ticket: Ticket,
 }
 
+#[allow(clippy::struct_excessive_bools)]
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Ticket {
     pub url: String,
