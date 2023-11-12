@@ -1,3 +1,5 @@
+#![allow(clippy::multiple_crate_versions)]
+
 use reqwest::Method;
 use serde::de::DeserializeOwned;
 use serde::{Deserialize, Serialize};
